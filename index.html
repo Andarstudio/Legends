@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090b10">
+<title>MGL LEGENDS | Standoff 2</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg:#090b10;
+  --card:#111722;
+  --red:#ed2939;
+  --white:#f5f5f5;
+  --muted:#9299a8;
+  --border:#252d3b;
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+html { scroll-behavior:smooth; }
+
+body {
+  background:var(--bg);
+  color:var(--white);
+  font-family:'Manrope',Arial,sans-serif;
+  line-height:1.6;
+}
+
+a { color:inherit; text-decoration:none; }
+
+button,input { font:inherit; }
+
+header {
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(9,11,16,.95);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+}
+
+.nav {
+  max-width:1150px;
+  margin:auto;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:29px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.logo span { color:var(--red); }
+
+.nav-links {
+  display:flex;
+  gap:20px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.nav-links a:hover { color:white; }
+
+.hero {
+  min-height:570px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:75px 20px;
+  background:
+    radial-gradient(ellipse at 50% 20%,#67121e55,transparent 60%),
+    linear-gradient(135deg,#111722,#090b10 70%);
+  border-bottom:1px solid var(--border);
+}
+
+.hero-content { max-width:850px; }
+
+.tag {
+  display:inline-block;
+  color:#ff6471;
+  background:#ed29391c;
+  border:1px solid #ed293955;
+  border-radius:30px;
+  padding:7px 15px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-bottom:22px;
+}
+
+.hero h1 {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(65px,13vw,115px);
+  line-height:.95;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.hero h1 span { color:var(--red); }
+
+.hero p {
+  max-width:570px;
+  margin:25px auto;
+  color:var(--muted);
+  font-size:15px;
+}
+
+.btn {
+  display:inline-block;
+  padding:13px 25px;
+  background:var(--red);
+  color:white;
+  border:0;
+  border-radius:6px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.btn:hover { background:#ff4050; transform:translateY(-2px); }
+
+.btn-secondary {
+  background:#1a2230;
+  border:1px solid var(--border);
+}
+
+.btn-secondary:hover { background:#273246; }
+
+.container {
+  max-width:1100px;
+  margin:auto;
+  padding:75px 20px;
+}
+
+.section-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:43px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.section-title span { color:var(--red); }
+
+.section-desc {
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:30px;
+}
+
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+
+.card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:25px;
+}
+
+.card h3 {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.card p { color:var(--muted); font-size:13px; }
+
+.card-icon {
+  font-size:30px;
+  margin-bottom:15px;
+}
+
+.price {
+  color:var(--red);
+  font-size:30px;
+  font-weight:900;
+  margin:10px 0;
+}
+
+.form-card {
+  max-width:650px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:28px;
+}
+
+label {
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin:17px 0 7px;
+}
+
+input {
+  width:100%;
+  padding:14px;
+  background:#090d14;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:6px;
+  outline:none;
+}
+
+input:focus { border-color:var(--red); }
+
+.form-card .btn { width:100%; margin-top:22px; }
+
+.message {
+  display:none;
+  padding:13px;
+  border-radius:6px;
+  margin-top:15px;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.success { display:block; background:#123d2a; color:#8bffc0; }
+.error { display:block; background:#451821; color:#ff9ca6; }
+
+.search {
+  max-width:400px;
+  margin-bottom:20px;
+}
+
+.table-wrap {
+  overflow-x:auto;
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:550px;
+  font-size:13px;
+}
+
+th,td {
+  padding:15px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+}
+
+th {
+  background:#151d29;
+  color:#ff6471;
+}
+
+td { color:#d9deea; }
+
+.empty {
+  text-align:center;
+  padding:35px;
+  color:var(--muted);
+}
+
+.prize {
+  text-align:center;
+  background:
+    radial-gradient(ellipse at center,#64121c55,transparent 70%),
+    var(--card);
+  border:1px solid #70202c;
+  border-radius:12px;
+  padding:40px 20px;
+}
+
+.prize strong {
+  display:block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:65px;
+  color:#ff4050;
+  line-height:1.1;
+}
+
+.prize p { color:var(--muted); margin-top:10px; }
+
+footer {
+  border-top:1px solid var(--border);
+  text-align:center;
+  padding:30px 20px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+footer strong { color:white; }
+
+@media(max-width:600px) {
+  .nav { flex-wrap:wrap; }
+  .nav-links { width:100%; justify-content:space-between; gap:8px; }
+  .nav-links a { font-size:11px; }
+  .hero { min-height:490px; }
+  .container { padding:55px 17px; }
+  .form-card { padding:20px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="#" class="logo">MGL <span>LEGENDS</span></a>
+
+    <div class="nav-links">
+      <a href="#about">Бидний тухай</a>
+      <a href="#register">Бүртгэл</a>
+      <a href="#players">Тоглогчид</a>
+      <a href="#prizes">Шагнал</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="tag">MONGOLIAN STANDOFF 2 COMMUNITY</div>
+
+    <h1>MGL <span>LEGENDS</span></h1>
+
+    <p>
+      Монголын Standoff 2 тоглогчдын нэгдэл.
+      Өөрийн чадвараа харуулж, MGL LEGENDS-д нэгдээрэй!
+    </p>
+
+    <a href="#register" class="btn">БҮРТГҮҮЛЭХ →</a>
+    <a href="#about" class="btn btn-secondary">ДЭЛГЭРЭНГҮЙ</a>
+  </div>
+</section>
+
+<section class="container" id="about">
+  <h2 class="section-title">БИДНИЙ <span>ТУХАЙ</span></h2>
+  <p class="section-desc">
+    MGL LEGENDS бол Standoff 2 тоглогчдод зориулсан нэгдэл юм.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🎮</div>
+      <h3>STANDOFF 2</h3>
+      <p>Standoff 2 тоглоомын Монгол тоглогчдын нэгдэл.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🏆</div>
+      <h3>ШАГНАЛ</h3>
+      <p>Эхний 3 ялагч тус бүр 500 Gold авна.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🔥</div>
+      <h3>LEGENDS</h3>
+      <p>Өөрийн чадвараа харуулж, нэгдэлд нэгдээрэй.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container" id="register">
+  <h2 class="section-title">ТОГЛОГЧИЙН <span>БҮРТГЭЛ</span></h2>
+  <p class="section-desc">
+    Доорх мэдээллийг үнэн зөв бөглөнө үү.
+  </p>
+
+  <div class="form-card">
+    <form id="registerForm">
+
+      <label for="registerName">Register Name</label>
+      <input id="registerName" maxlength="40" required
+        placeholder="Бүртгэлийн нэр">
+
+      <label for="so2Id">So2 ID</label>
+      <input id="so2Id" maxlength="50" required
+        placeholder="Таны Standoff 2 ID">
+
+      <label for="so2Name">So2 name</label>
+      <input id="so2Name" maxlength="40" required
+        placeholder="Таны тоглоомын нэр">
+
+      <button class="btn" id="submitBtn" type="submit">
+        БҮРТГҮҮЛЭХ
+      </button>
+
+      <div id="formMessage" class="message"></div>
+    </form>
+
+    <p style="color:var(--muted);font-size:11px;margin-top:15px">
+      Бүртгэлийн хураамж: 9,000₮.
+      Төлбөрийг тусад нь зохион байгуулагчтай баталгаажуулна.
+    </p>
+  </div>
+</section>
+
+<section class="container" id="players">
+  <h2 class="section-title">БҮРТГҮҮЛСЭН <span>ТОГЛОГЧИД</span></h2>
+  <p class="section-desc">
+    Бүртгэлтэй тоглогчдын жагсаалт.
+  </p>
+
+  <input class="search" id="searchInput"
+    placeholder="Тоглогч хайх...">
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Register Name</th>
+          <th>So2 ID</th>
+          <th>So2 name</th>
+        </tr>
+      </thead>
+      <tbody id="playersTable">
+        <tr><td colspan="4" class="empty">
+          Firebase тохиргоо хийгдээгүй байна.
+        </td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container" id="prizes">
+  <div class="prize">
+    <div class="tag">WINNERS REWARD</div>
+    <h2 class="section-title">ЯЛАГЧДЫН <span>ШАГНАЛ</span></h2>
+
+    <strong>500 GOLD</strong>
+
+    <p>
+      Эхний 3 ялагч тус бүр 500 Gold авна.
+      <br>
+      Нийт шагнал: 1,500 Gold.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <strong>MGL LEGENDS</strong>
+  <p>Монголын Standoff 2 тоглогчдын нэгдэл.</p>
+  <p>© 2026 MGL LEGENDS. All rights reserved.</p>
+</footer>
+
+<!-- Firebase configuration -->
+<!-- Leave blank until you have your own Firebase project. -->
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+/*
+  FIREBASE CONFIGURATION
+
+  Fill these values using your Firebase project settings.
+*/
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAXE7WMX-A-r3oEGAYyE9QqKhJOoDag2kg",
+  authDomain: "mgllegendsoffical.firebaseapp.com",
+  projectId: "mgllegendsoffical",
+  storageBucket: "mgllegendsoffical.firebasestorage.app",
+  messagingSenderId: "509171638567",
+  appId: "1:509171638567:web:b8cefbde04afb3f622c902",
+  measurementId: "G-84TMKCVTLX"
+};
+
+
+let db = null;
+let players = [];
+
+const form = document.getElementById("registerForm");
+const message = document.getElementById("formMessage");
+const submitBtn = document.getElementById("submitBtn");
+const table = document.getElementById("playersTable");
+const searchInput = document.getElementById("searchInput");
+
+function showMessage(text, type) {
+  message.textContent = text;
+  message.className = "message " + type;
+}
+
+function firebaseReady() {
+  return firebaseConfig.apiKey &&
+    firebaseConfig.projectId &&
+    firebaseConfig.appId;
+}
+
+function renderPlayers() {
+  const query = searchInput.value.toLowerCase().trim();
+
+  const filtered = players.filter(player =>
+    (player.registerName || "").toLowerCase().includes(query) ||
+    (player.so2Id || "").toLowerCase().includes(query) ||
+    (player.so2Name || "").toLowerCase().includes(query)
+  );
+
+  table.innerHTML = "";
+
+  if (filtered.length === 0) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="4" class="empty">
+          Одоогоор тоглогч олдсонгүй.
+        </td>
+      </tr>`;
+    return;
+  }
+
+  filtered.forEach((player, index) => {
+    const tr = document.createElement("tr");
+
+    [index + 1, player.registerName, player.so2Id, player.so2Name]
+      .forEach(value => {
+        const td = document.createElement("td");
+        td.textContent = value || "";
+        tr.appendChild(td);
+      });
+
+    table.appendChild(tr);
+  });
+}
+
+searchInput.addEventListener("input", renderPlayers);
+
+async function loadPlayers() {
+  if (!db) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="4" class="empty">
+          Firebase тохиргоо хийгдээгүй байна.
+        </td>
+      </tr>`;
+    return;
+  }
+
+  try {
+    const snapshot = await db.collection("players")
+      .orderBy("createdAt", "desc")
+      .get();
+
+    players = snapshot.docs.map(doc => doc.data());
+    renderPlayers();
+
+  } catch (error) {
+    console.error("Player loading error:", error);
+
+    table.innerHTML = `
+      <tr>
+        <td colspan="4" class="empty">
+          Тоглогчдын жагсаалтыг ачаалж чадсангүй.
+        </td>
+      </tr>`;
+  }
+}
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const registerName =
+    document.getElementById("registerName").value.trim();
+
+  const so2Id =
+    document.getElementById("so2Id").value.trim();
+
+  const so2Name =
+    document.getElementById("so2Name").value.trim();
+
+  if (!registerName || !so2Id || !so2Name) {
+    showMessage("Бүх талбарыг бөглөнө үү.", "error");
+    return;
+  }
+
+  if (!db) {
+    showMessage(
+      "Firebase холбогдоогүй байна. Админ Firebase тохиргоог хийх шаардлагатай.",
+      "error"
+    );
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "БҮРТГЭЖ БАЙНА...";
+
+  try {
+    const playerRef = db.collection("players").doc(so2Id);
+
+    await db.runTransaction(async transaction => {
+      const existing = await transaction.get(playerRef);
+
+      if (existing.exists) {
+        throw new Error("Энэ So2 ID аль хэдийн бүртгэгдсэн байна.");
+      }
+
+      transaction.set(playerRef, {
+        registerName,
+        so2Id,
+        so2Name,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    });
+
+    showMessage("Амжилттай бүртгэгдлээ!", "success");
+
+    form.reset();
+    await loadPlayers();
+
+  } catch (error) {
+    console.error("Registration error:", error);
+
+    showMessage(
+      error.message || "Бүртгэл амжилтгүй боллоо.",
+      "error"
+    );
+
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "БҮРТГҮҮЛЭХ";
+  }
+});
+
+function initializeFirebase() {
+  if (!firebaseReady()) {
+    console.log("MGL LEGENDS: Firebase configuration is empty.");
+    return;
+  }
+
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+
+    console.log("MGL LEGENDS: Firebase initialized.");
+
+    loadPlayers();
+
+  } catch (error) {
+    console.error("Firebase initialization error:", error);
+  }
+}
+
+initializeFirebase();
+</script>
+
+</body>
+</html>
